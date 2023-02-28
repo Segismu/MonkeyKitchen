@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearCounter : MonoBehaviour, IKitchenObjectParent
+public class ContainerCounter : MonoBehaviour, IKitchenObjectParent
 {
     [SerializeField] KitchenObjSO kitchenObjectSO;
     [SerializeField] Transform counterTopPoint;
