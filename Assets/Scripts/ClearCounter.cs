@@ -8,6 +8,27 @@ public class ClearCounter : BaseCounter
 
     public override void Interact(PlayerController player)
     {
+        if (!HasKitchenObject())
+        {
+            if (player.HasKitchenObject())
+            {
+                player.GetKitchenObj().SetKitchenOnjectParent(this);
+            }
+            else
+            {
 
+            }
+        }
+        else
+        {
+            if (player.HasKitchenObject())
+            {
+
+            }
+            else
+            {
+                GetKitchenObj().SetKitchenOnjectParent(player);
+            }
+        }
     }
 }
