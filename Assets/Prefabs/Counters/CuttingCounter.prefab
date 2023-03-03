@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 4375437911700807634}
   - component: {fileID: 4801709818874122612}
   - component: {fileID: 4627412232765822728}
+  - component: {fileID: 8742672574783554552}
   m_Layer: 5
   m_Name: PregressBarUI
   m_TagString: Untagged
@@ -193,6 +194,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cuttingCounter: {fileID: 3300747466485075221}
   barImage: {fileID: 1061367483363769849}
+--- !u!114 &8742672574783554552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5479718114544348622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da790fc4712440a8b31791796cc21a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 2
 --- !u!1 &6356576739719800103
 GameObject:
   m_ObjectHideFlags: 0
