@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8aff4b5ef9844fa979da49d4b03af6, type: 3}
   m_Name: Meat Burned
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6096697571440424920, guid: ecd85cc03071e496d9676a8db83e4a90, type: 3}
-  sprite: {fileID: 21300000, guid: aa1bacc24dde76e47b2ec0dd4e82385b, type: 3}
-  objectName: Meat Uncooked
+  prefab: {fileID: 6096697571440424920, guid: f0065afcebe8648a9a01c6b212265f09, type: 3}
+  sprite: {fileID: 21300000, guid: 713ea9afa60dd6e4ebf6503a33e8cc99, type: 3}
+  objectName: Meat Burned
