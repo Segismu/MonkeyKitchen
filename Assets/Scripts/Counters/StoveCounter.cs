@@ -6,6 +6,29 @@ public class StoveCounter : BaseCounter
 {
     [SerializeField] private FryingRecipeSO[] fryingRecipeSOArray;
 
+    private float fryingTimer;
+    private FryingRecipeSO FryingRecipeSO;
+
+    private void Update()
+    {
+        if (HasKitchenObject())
+        {
+            fryingTimer += Time.deltaTime;
+            FryingRecipeSO fryingRecipeSO = GetFryingRecipeSOWithInput(GetKitchenObj().GetKitchenObjSO());
+
+            if (fryingTimer > fryingRecipeSO.fryingTimerMax)
+            {
+                fryingTimer = 0f;
+                Debug.Log("Fried.");
+
+                GetKitchenObj().DestroySelf();
+
+                KitchenObj.SpawnKitchenObject(fryingRecipeSO.output, this);
+            }
+            Debug.Log(fryingTimer);
+        }
+    }
+
     public override void Interact(PlayerController player)
     {
         if (!HasKitchenObject())
