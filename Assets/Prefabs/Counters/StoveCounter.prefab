@@ -186,6 +186,8 @@ MonoBehaviour:
   counterTopPoint: {fileID: 6121983143485147103}
   fryingRecipeSOArray:
   - {fileID: 11400000, guid: 53c3a8427ccc7451daad628c531993da, type: 2}
+  burningRecipeSOArray:
+  - {fileID: 11400000, guid: 25a339c0a0c194cc990ffc98f8c1ddd0, type: 2}
 --- !u!1001 &7125693588174008705
 PrefabInstance:
   m_ObjectHideFlags: 0
