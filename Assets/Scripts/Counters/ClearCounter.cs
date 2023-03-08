@@ -23,7 +23,12 @@ public class ClearCounter : BaseCounter
         {
             if (player.HasKitchenObject())
             {
-
+                if (player.GetKitchenObj() is PlateKitchenObject)
+                {
+                    PlateKitchenObject plateKitchenObject = player.GetKitchenObj() as PlateKitchenObject;
+                    plateKitchenObject.AddIngredient(GetKitchenObj().GetKitchenObjSO());
+                    GetKitchenObj().DestroySelf();
+                }
             }
             else
             {
