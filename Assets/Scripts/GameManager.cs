@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         return 1 - (gamePlayTimer / gamePlayTimerMax);
     }
 
-    private void TogglePauseGame()
+    public void TogglePauseGame()
     {
         isGamePaused = !isGamePaused;
 
