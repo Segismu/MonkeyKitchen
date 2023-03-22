@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class GamePauseUI : MonoBehaviour
 {
+    public static OptionsUI Instance { get; private set; }
+
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button optionsButton;
 
     private void Awake()
     {
@@ -15,6 +18,9 @@ public class GamePauseUI : MonoBehaviour
         });
         mainMenuButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.MainMenu);
+        });
+        optionsButton.onClick.AddListener(() => {
+            OptionsUI.Instance.Show();
         });
     }
 
