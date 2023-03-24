@@ -36,8 +36,7 @@ public class OptionsUI : MonoBehaviour
         soundControlButton.onClick.AddListener(() => { SoundManager.Instance.ChangeVolume(); UpdateVisual(); });
         musicButton.onClick.AddListener(() => { MusicManager.Instance.ChangeVolume(); UpdateVisual(); });
         closeButton.onClick.AddListener(() => { Hide(); });
-
-    }
+    }   
 
     private void Start()
     {
