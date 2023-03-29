@@ -6,7 +6,15 @@ using UnityEngine;
 
 public class PlayerController : NetworkBehaviour, IKitchenObjectParent
 {
-    //public static PlayerController Instance { get; set; }
+    public static event EventHandler OnAnyPlayerSpawned;
+    public static event EventHandler OnAnyPickedSomething;
+
+    public static void ResetStaticData()
+    {
+        OnAnyPlayerSpawned = null;
+    }
+
+    public static PlayerController LocalInstance { get; set; }
 
     public event EventHandler OnPickedSomething;
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
@@ -24,15 +32,15 @@ public class PlayerController : NetworkBehaviour, IKitchenObjectParent
     private BaseCounter selectedCounter;
     private KitchenObj kitchenObj;
 
-    private void Awake()
-    {
-        //Instance = this;
-    }
-
     private void Start()
     {
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
         GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner) { LocalInstance = this; }
     }
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
@@ -43,6 +51,8 @@ public class PlayerController : NetworkBehaviour, IKitchenObjectParent
         {
             selectedCounter.InteractAlternate(this);
         }
+
+        OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
     }
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
@@ -173,7 +183,8 @@ public class PlayerController : NetworkBehaviour, IKitchenObjectParent
         if(kitchenObj != null)
         {
             OnPickedSomething?.Invoke(this, EventArgs.Empty);
-        }
+            OnAnyPickedSomething?.Invoke(this, EventArgs.Empty);
+}
     }
 
     public KitchenObj GetKitchenObj()
