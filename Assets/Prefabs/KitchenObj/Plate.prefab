@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 6096697571440424920}
   - component: {fileID: -4405937434254515962}
   - component: {fileID: -2077381779626183690}
+  - component: {fileID: 6692101641445641811}
   m_Layer: 0
   m_Name: Plate
   m_TagString: Untagged
@@ -201,6 +202,18 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &6692101641445641811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2890594343033334232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df18ac09ff4f40ebad3a5b417131d28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3317133743737249376
 GameObject:
   m_ObjectHideFlags: 0
