@@ -36,11 +36,11 @@ public class PlateCounter : BaseCounter
     [ServerRpc]
     private void SpawnPlateServerRpc()
     {
-        SpawnPlateClietRpc();
+        SpawnPlateClientRpc();
     }
 
     [ClientRpc]
-    private void SpawnPlateClietRpc()
+    private void SpawnPlateClientRpc()
     {
         platesSpawnedAmount++;
 
