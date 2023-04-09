@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class StoveCounter : BaseCounter, IHasProgress
@@ -107,24 +108,12 @@ public class StoveCounter : BaseCounter, IHasProgress
             if (player.HasKitchenObject())
             {
                 if (HasRecipeWithInput(player.GetKitchenObj().GetKitchenObjSO()))
-                {
-                    player.GetKitchenObj().SetKitchenOnjectParent(this);
+                { 
+                    KitchenObj kitchenObj = player.GetKitchenObj();
 
-                    fryingRecipeSO = GetFryingRecipeSOWithInput(GetKitchenObj().GetKitchenObjSO());
+                    kitchenObj.SetKitchenOnjectParent(this);
 
-                    state = State.Frying;
-                    fryingTimer = 0f;
-
-
-                    OnStateChanged?.Invoke(this, new OnStateChangedEventArgs
-                    {
-                        state = state
-                    });
-
-                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
-                    {
-                        progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
-                    });
+                    InteracrLogicPlaceObjectOnCounterServerRpc(KitchenGameMultiplayer.Instance.GetKitchenObjectSOIndex(kitchenObj.GetKitchenObjSO()));
                 }
             }
             else
@@ -175,6 +164,33 @@ public class StoveCounter : BaseCounter, IHasProgress
                 }); ;
             }
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void InteracrLogicPlaceObjectOnCounterServerRpc(int kitchenObjectSOIndex)
+    {
+        InteracrLogicPlaceObjectOnCounterClientRpc(kitchenObjectSOIndex);
+    }
+
+    [ClientRpc]
+    private void InteracrLogicPlaceObjectOnCounterClientRpc(int kitchenObjectSOIndex)
+    {
+        KitchenObjSO kitchenObjSO = KitchenGameMultiplayer.Instance.GetKitchenObjectSOFromIndex(kitchenObjectSOIndex);
+        fryingRecipeSO = GetFryingRecipeSOWithInput(kitchenObjSO);
+
+        state = State.Frying;
+        fryingTimer = 0f;
+
+
+        OnStateChanged?.Invoke(this, new OnStateChangedEventArgs
+        {
+            state = state
+        });
+
+        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+        {
+            progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
+        });
     }
 
     private bool HasRecipeWithInput(KitchenObjSO inputKitchenObjectSO)
