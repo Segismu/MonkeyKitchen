@@ -25,8 +25,8 @@ public class StoveCounter : BaseCounter, IHasProgress
     [SerializeField] private BurningRecipeSO[] burningRecipeSOArray;
 
     private State state;
-    private float fryingTimer;
-    private float burningTimer;
+    private NetworkVariable <float> fryingTimer = new NetworkVariable<float>(0f);
+    private NetworkVariable <float> burningTimer = new NetworkVariable<float>(0f);
     private FryingRecipeSO fryingRecipeSO;
     private BurningRecipeSO burningRecipeSO;
 
@@ -35,8 +35,28 @@ public class StoveCounter : BaseCounter, IHasProgress
         state = State.Idle;
     }
 
+    public override void OnNetworkSpawn()
+    {
+        fryingTimer.OnValueChanged += FryingTimer_OnValueChanged;
+    }
+
+    private void FryingTimer_OnValueChanged(float previousValue, float newValue)
+    {
+        float fryingTimerMax = fryingRecipeSO != null ? fryingRecipeSO.fryingTimerMax : 1f;
+
+        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+        {
+            progressNormalized = fryingTimer.Value / fryingRecipeSO.fryingTimerMax
+        });
+    }
+
     private void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         if (HasKitchenObject())
         {
         switch (state)
@@ -44,16 +64,13 @@ public class StoveCounter : BaseCounter, IHasProgress
             case State.Idle:
                 break;
             case State.Frying:
-                fryingTimer += Time.deltaTime;
+                fryingTimer.Value += Time.deltaTime;
 
-                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
-                    {
-                        progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
-                    });
+                    
 
-                    if (fryingTimer > fryingRecipeSO.fryingTimerMax)
+                    if (fryingTimer.Value > fryingRecipeSO.fryingTimerMax)
                     {
-                    GetKitchenObj().DestroySelf();
+                        KitchenObj.DestroyKitchenObject(GetKitchenObj());
 
                     KitchenObj.SpawnKitchenObject(fryingRecipeSO.output, this);
 
@@ -77,7 +94,7 @@ public class StoveCounter : BaseCounter, IHasProgress
 
                     if (burningTimer > burningRecipeSO.burningTimerMax)
                     {
-                        GetKitchenObj().DestroySelf();
+                        KitchenObj.DestroyKitchenObject(GetKitchenObj());
 
                         KitchenObj.SpawnKitchenObject(burningRecipeSO.output, this);
 
@@ -169,6 +186,8 @@ public class StoveCounter : BaseCounter, IHasProgress
     [ServerRpc(RequireOwnership = false)]
     private void InteracrLogicPlaceObjectOnCounterServerRpc(int kitchenObjectSOIndex)
     {
+        fryingTimer.Value = 0f;
+
         InteracrLogicPlaceObjectOnCounterClientRpc(kitchenObjectSOIndex);
     }
 
@@ -179,17 +198,10 @@ public class StoveCounter : BaseCounter, IHasProgress
         fryingRecipeSO = GetFryingRecipeSOWithInput(kitchenObjSO);
 
         state = State.Frying;
-        fryingTimer = 0f;
-
 
         OnStateChanged?.Invoke(this, new OnStateChangedEventArgs
         {
             state = state
-        });
-
-        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
-        {
-            progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
         });
     }
 
