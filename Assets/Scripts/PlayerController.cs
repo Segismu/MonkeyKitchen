@@ -43,6 +43,8 @@ public class PlayerController : NetworkBehaviour, IKitchenObjectParent
     public override void OnNetworkSpawn()
     {
         if (IsOwner) { LocalInstance = this; }
+
+        transform.position = spawnPosList[(int)OwnerClientId];
     }
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
@@ -54,7 +56,6 @@ public class PlayerController : NetworkBehaviour, IKitchenObjectParent
             selectedCounter.InteractAlternate(this);
         }
 
-        transform.position = spawnPosList[(int)OwnerClientId];
         OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
     }
 
