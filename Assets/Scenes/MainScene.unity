@@ -10385,6 +10385,41 @@ PrefabInstance:
       propertyPath: gameInput
       value: 
       objectReference: {fileID: 109103069}
+    - target: {fileID: 3489258292448781326, guid: cfce86dfa421a4e6388f9951ce899d8c,
+        type: 3}
+      propertyPath: spawnPosList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489258292448781326, guid: cfce86dfa421a4e6388f9951ce899d8c,
+        type: 3}
+      propertyPath: spawnPosList.Array.data[0].x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489258292448781326, guid: cfce86dfa421a4e6388f9951ce899d8c,
+        type: 3}
+      propertyPath: spawnPosList.Array.data[1].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489258292448781326, guid: cfce86dfa421a4e6388f9951ce899d8c,
+        type: 3}
+      propertyPath: spawnPosList.Array.data[2].x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489258292448781326, guid: cfce86dfa421a4e6388f9951ce899d8c,
+        type: 3}
+      propertyPath: spawnPosList.Array.data[2].z
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489258292448781326, guid: cfce86dfa421a4e6388f9951ce899d8c,
+        type: 3}
+      propertyPath: spawnPosList.Array.data[3].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489258292448781326, guid: cfce86dfa421a4e6388f9951ce899d8c,
+        type: 3}
+      propertyPath: spawnPosList.Array.data[3].z
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 6052614197179524981, guid: cfce86dfa421a4e6388f9951ce899d8c,
         type: 3}
       propertyPath: GlobalObjectIdHash
