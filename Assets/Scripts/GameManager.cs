@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnStageChanged;
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
+    public event EventHandler OnLocalPlayerReadyChanged;
 
     private enum State
     {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     }
 
     private State state;
+    private bool isLocalPlayerReady;
     private float countdownToStartTimer = 3f;
     private float gamePlayTimer;
     private float gamePlayTimerMax = 300f;
@@ -40,8 +42,8 @@ public class GameManager : MonoBehaviour
     private void GameInput_OnInteractAction(object sender, EventArgs e)
     {
         if (state == State.WaitingToStart) {
-            state = State.CountdownToStart;
-            OnStageChanged?.Invoke(this, EventArgs.Empty);
+            isLocalPlayerReady = true;
+            OnLocalPlayerReadyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -100,6 +102,11 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver()
     {
         return state == State.GameOver;
+    }
+
+    public bool IsLocalPlayerReady()
+    {
+        return isLocalPlayerReady;
     }
 
 
