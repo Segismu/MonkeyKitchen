@@ -14,6 +14,7 @@ public class GameManager : NetworkBehaviour
     public event EventHandler OnMultiplayerGamePaused;
     public event EventHandler OnMultiplayerGameUnpaused;
     public event EventHandler OnLocalPlayerReadyChanged;
+    private bool autoTestGamePauseState;
 
     private enum State
     {
@@ -50,6 +51,16 @@ public class GameManager : NetworkBehaviour
     {
         state.OnValueChanged += State_OnValueChanged;
         isGamePaused.OnValueChanged += IsGamePaused_OnValueChanged;
+
+        if(IsServer)
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+        }
+    }
+
+    private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
+    {
+        autoTestGamePauseState = true;
     }
 
     private void IsGamePaused_OnValueChanged(bool previousValue, bool newValue)
@@ -143,7 +154,15 @@ public class GameManager : NetworkBehaviour
                 break;
 
         }
-        Debug.Log(state);
+    }
+
+    private void LateUpdate()
+    {
+        if(autoTestGamePauseState)
+        {
+            autoTestGamePauseState = false;
+            TestGamePausedState();
+        }
     }
 
     public bool IsGamePlaying()

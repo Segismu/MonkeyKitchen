@@ -7,6 +7,15 @@ public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI recipesDeliveredText;
 
+    /*private void Awake()
+    {
+        playAgainButton.onClicl.Addlistener(() =>
+        {
+            NetworkManager.Singleton.Shutdown();
+            Loader.Load(Loader.Scene.MainMenuScene);
+        })
+    }*/
+
     private void Start()
     {
         GameManager.Instance.OnStageChanged += GameManager_OnStageChanged;
